@@ -13,8 +13,14 @@ class AvaApp extends StatelessWidget {
     return MaterialApp(
       home: const HomePage(),
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+        colorScheme: ColorScheme.light(
+            primaryContainer: const Color(0xFFFFFFFF),
+            onPrimary: const Color(0xFF2A1E39),
+            onPrimaryFixed: const Color(0xFF736B7C),
+            onPrimaryFixedVariant: const Color(0xFFA448FF),
+            outline: const Color(0x26000000),
+            surface: const Color(0xFFF2F0ED),
+        )
       ),
     );
   }
