@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:meet_ava_take_home/credit_score_card.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         toolbarHeight: 0,
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
-            // Custom Status Bar and Header
             _buildHeader(context),
-            // Scrollable Content
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
           top: 8,
       ),
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.tertiaryContainer,
+          color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30.0),
           bottomRight: Radius.circular(30.0),
@@ -67,116 +67,14 @@ class HomePage extends StatelessWidget {
               Text(
                 'Home',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.primaryContainer
+                  color: Theme.of(context).colorScheme.secondary
                 )
               ),
               const SizedBox(width: 24),
             ],
           ),
           const SizedBox(height: 16),
-          _buildCreditScoreCard(context)
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCreditScoreCard(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.outline,
-          width: 1.0,
-        )
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Credit Score',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.onPrimary
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFDCFCE7),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: const Text(
-                        'FREE',
-                        style: TextStyle(
-                          color: Color(0xFF166534),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                const Text(
-                  'Updated Today | Next May 12',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                const Text(
-                  'Experian',
-                  style: TextStyle(
-                    color: Color(0xFF6B46C1),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          _buildCircularProgress(720, 850),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCircularProgress(int value, int maxValue) {
-    final percentage = value / maxValue;
-    return SizedBox(
-      width: 80,
-      height: 80,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            width: 80,
-            height: 80,
-            child: CircularProgressIndicator(
-              value: percentage,
-              strokeWidth: 6,
-              backgroundColor: Colors.grey[300],
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
-            ),
-          ),
-          Text(
-            value.toString(),
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          CreditScoreCard()
         ],
       ),
     );
