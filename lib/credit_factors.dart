@@ -5,49 +5,74 @@ class CreditFactors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardBackgroundColor = Theme.of(context).colorScheme.primaryContainer;
-    final cardBorderColor = Theme.of(context).colorScheme.outline;
-    final cardHeadline = Theme.of(context).textTheme.headlineSmall;
-    final cardBodyLightText = Theme.of(context).textTheme.bodyMedium;
-    final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
+    final cardHeadlineText = Theme.of(context).textTheme.headlineMedium;
+
+    final highImpactColor = Color(0xFF003928);
+    final mediumImpactColor = Color(0xFF48A388);
+    final lowImpactColor = Color(0xFFA9EACE);
+
+    final highImpactText = Colors.white;
+    final mediumImpactText = Colors.white;
+    final lowImpactText = Color(0xFF003928);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Credit factors',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        ),
+        Text('Credit factors', style: cardHeadlineText),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: CreditFactorsCard(
-                title: 'Payment\nHistory',
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              CreditFactorsCard(
+                title: 'Payment History',
                 value: '100%',
                 impact: 'HIGH IMPACT',
-                impactColor: Colors.green,
+                impactColor: highImpactColor,
+                impactTextColor: highImpactText,
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: CreditFactorsCard(
-                title: 'Credit Card\nUtilization',
+              const SizedBox(width: 8),
+              CreditFactorsCard(
+                title: 'Credit Card Utilization',
                 value: '4%',
                 impact: 'LOW IMPACT',
-                impactColor: Colors.blue,
+                impactColor: lowImpactColor,
+                impactTextColor: lowImpactText,
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: CreditFactorsCard(
-                title: 'Derogatory\nMarks',
-                value: '0',
-                impact: 'MED',
-                impactColor: Colors.teal,
+              const SizedBox(width: 8),
+              CreditFactorsCard(
+                title: 'Derogatory Marks',
+                value: '2',
+                impact: 'MED IMPACT',
+                impactColor: mediumImpactColor,
+                impactTextColor: mediumImpactText,
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              CreditFactorsCard(
+                title: 'Age of Credit History',
+                value: '1ys 4mo',
+                impact: 'LOW IMPACT',
+                impactColor: lowImpactColor,
+                impactTextColor: lowImpactText,
+              ),
+              const SizedBox(width: 8),
+              CreditFactorsCard(
+                title: 'Hard Inquiries',
+                value: '3',
+                impact: 'MED IMPACT',
+                impactColor: mediumImpactColor,
+                impactTextColor: mediumImpactText,
+              ),
+              const SizedBox(width: 8),
+              CreditFactorsCard(
+                title: 'Total Accounts',
+                value: '9',
+                impact: 'MED IMPACT',
+                impactColor: mediumImpactColor,
+                impactTextColor: mediumImpactText,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -59,6 +84,7 @@ class CreditFactorsCard extends StatelessWidget {
   final String value;
   final String impact;
   final Color impactColor;
+  final Color impactTextColor;
 
   const CreditFactorsCard({
     super.key,
@@ -66,11 +92,17 @@ class CreditFactorsCard extends StatelessWidget {
     required this.value,
     required this.impact,
     required this.impactColor,
+    required this.impactTextColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cardTitleText = Theme.of(context).textTheme.headlineSmall;
+    final cardValueText = Theme.of(context).textTheme.headlineMedium;
+
     return Container(
+      height: 144,
+      width: 140,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -86,29 +118,28 @@ class CreditFactorsCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.grey, fontSize: 12),
+          FittedBox(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: cardTitleText?.copyWith(fontSize: 14),
+            ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 20),
+          FittedBox(child: Text(value, style: cardValueText)),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: impactColor.withOpacity(0.1),
+              color: impactColor,
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               impact,
               style: TextStyle(
-                color: impactColor,
-                fontSize: 10,
-                fontWeight: FontWeight.w600,
+                color: impactTextColor,
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
