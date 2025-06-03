@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meet_ava_take_home/animated_dial.dart';
 
-class CreditScoreCard extends StatelessWidget {
-  const CreditScoreCard({super.key});
+class CreditDetails extends StatelessWidget {
+  const CreditDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,9 @@ class CreditScoreCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: cardBackgroundColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: cardBorderColor,
-            width: 1.0,
-          )
+        color: cardBackgroundColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: cardBorderColor, width: 1.0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,13 +28,13 @@ class CreditScoreCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      'Credit Score',
-                      style: cardHeadline,
-                    ),
+                    Text('Credit Score', style: cardHeadline),
                     const SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.tertiary,
                         borderRadius: BorderRadius.circular(10),
@@ -54,19 +51,18 @@ class CreditScoreCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  'Updated Today | Next May 12',
-                  style: cardBodyLightText,
-                ),
+                Text('Updated Today | Next May 12', style: cardBodyLightText),
                 const SizedBox(height: 4),
-                Text(
-                    'Experian',
-                    style: cardBodyPinkText
-                ),
+                Text('Experian', style: cardBodyPinkText),
               ],
             ),
           ),
-          AnimatedDial(value: 720, maxValue: 850, numberText: "720", subText: "Good",),
+          AnimatedDial(
+            value: 720,
+            maxValue: 850,
+            numberText: "720",
+            subText: "Good",
+          ),
         ],
       ),
     );

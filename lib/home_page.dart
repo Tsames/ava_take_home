@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:meet_ava_take_home/credit_score_card.dart';
+import 'package:meet_ava_take_home/credit_chart.dart';
+import 'package:meet_ava_take_home/credit_details.dart';
+
+import 'credit_factors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -26,10 +27,10 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 24),
-                    // _buildChartSection(context),
-                    // const SizedBox(height: 24),
-                    // _buildCreditFactors(context),
-                    // const SizedBox(height: 24),
+                    CreditChart(),
+                    const SizedBox(height: 24),
+                    CreditFactors(),
+                    const SizedBox(height: 24),
                     // _buildAccountDetails(context),
                     // const SizedBox(height: 24),
                     // _buildCreditCardAccounts(context),
@@ -45,18 +46,13 @@ class HomePage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
-          left: 16,
-          right: 16,
-          bottom: 24,
-          top: 8,
-      ),
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24, top: 8),
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondaryContainer,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30.0),
           bottomRight: Radius.circular(30.0),
-        )
+        ),
       ),
       child: Column(
         children: [
@@ -67,257 +63,19 @@ class HomePage extends StatelessWidget {
               Text(
                 'Home',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary
-                )
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
               const SizedBox(width: 24),
             ],
           ),
           const SizedBox(height: 16),
-          CreditScoreCard()
+          CreditDetails(),
         ],
       ),
     );
   }
 
-  // Widget _buildChartSection(BuildContext context) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       const Text(
-  //         'Chart',
-  //         style: TextStyle(
-  //           fontSize: 20,
-  //           fontWeight: FontWeight.w600,
-  //         ),
-  //       ),
-  //       const SizedBox(height: 12),
-  //       Container(
-  //         padding: const EdgeInsets.all(16),
-  //         decoration: BoxDecoration(
-  //           color: Colors.white,
-  //           borderRadius: BorderRadius.circular(12),
-  //           boxShadow: [
-  //             BoxShadow(
-  //               color: Colors.grey.withOpacity(0.1),
-  //               spreadRadius: 1,
-  //               blurRadius: 4,
-  //               offset: const Offset(0, 2),
-  //             ),
-  //           ],
-  //         ),
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             Row(
-  //               children: [
-  //                 const Text(
-  //                   'Credit Score',
-  //                   style: TextStyle(
-  //                     fontSize: 16,
-  //                     fontWeight: FontWeight.w500,
-  //                   ),
-  //                 ),
-  //                 const SizedBox(width: 8),
-  //                 Container(
-  //                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-  //                   decoration: BoxDecoration(
-  //                     color: const Color(0xFFDCFCE7),
-  //                     borderRadius: BorderRadius.circular(4),
-  //                   ),
-  //                   child: const Text(
-  //                     'FREE',
-  //                     style: TextStyle(
-  //                       color: Color(0xFF166534),
-  //                       fontSize: 12,
-  //                       fontWeight: FontWeight.w600,
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //             const SizedBox(height: 4),
-  //             const Text(
-  //               'Updated Today | Next May 12',
-  //               style: TextStyle(
-  //                 color: Colors.grey,
-  //                 fontSize: 12,
-  //               ),
-  //             ),
-  //             const SizedBox(height: 4),
-  //             const Text(
-  //               'Experian',
-  //               style: TextStyle(
-  //                 color: Color(0xFF6B46C1),
-  //                 fontSize: 12,
-  //                 fontWeight: FontWeight.w500,
-  //               ),
-  //             ),
-  //             const SizedBox(height: 16),
-  //             SizedBox(
-  //               height: 200,
-  //               child: LineChart(
-  //                 LineChartData(
-  //                   gridData: FlGridData(show: false),
-  //                   titlesData: FlTitlesData(
-  //                     leftTitles: AxisTitles(
-  //                       sideTitles: SideTitles(
-  //                         showTitles: true,
-  //                         reservedSize: 40,
-  //                         getTitlesWidget: (value, meta) {
-  //                           return Text(
-  //                             value.toInt().toString(),
-  //                             style: const TextStyle(fontSize: 12, color: Colors.grey),
-  //                           );
-  //                         },
-  //                       ),
-  //                     ),
-  //                     bottomTitles: AxisTitles(
-  //                       sideTitles: SideTitles(showTitles: false),
-  //                     ),
-  //                     topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-  //                     rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-  //                   ),
-  //                   borderData: FlBorderData(show: false),
-  //                   minX: 0,
-  //                   maxX: 11,
-  //                   minY: 600,
-  //                   maxY: 750,
-  //                   lineBarsData: [
-  //                     LineChartBarData(
-  //                       spots: [
-  //                         const FlSpot(0, 650),
-  //                         const FlSpot(1, 670),
-  //                         const FlSpot(2, 660),
-  //                         const FlSpot(3, 680),
-  //                         const FlSpot(4, 690),
-  //                         const FlSpot(5, 700),
-  //                         const FlSpot(6, 710),
-  //                         const FlSpot(7, 705),
-  //                         const FlSpot(8, 715),
-  //                         const FlSpot(9, 720),
-  //                         const FlSpot(10, 720),
-  //                         const FlSpot(11, 720),
-  //                       ],
-  //                       isCurved: true,
-  //                       color: const Color(0xFF10B981),
-  //                       barWidth: 2,
-  //                       dotData: FlDotData(
-  //                         show: true,
-  //                         getDotPainter: (spot, percent, barData, index) =>
-  //                             FlDotCirclePainter(
-  //                               radius: 3,
-  //                               color: const Color(0xFF10B981),
-  //                               strokeWidth: 0,
-  //                             ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //             const SizedBox(height: 8),
-  //             const Text(
-  //               'Last 12 months',
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(
-  //                 color: Colors.grey,
-  //                 fontSize: 12,
-  //               ),
-  //             ),
-  //             const Text(
-  //               'Score calculated using VantageScore 3.0',
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(
-  //                 color: Colors.grey,
-  //                 fontSize: 10,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  //
-  // Widget _buildCreditFactors(BuildContext context) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       const Text(
-  //         'Credit factors',
-  //         style: TextStyle(
-  //           fontSize: 20,
-  //           fontWeight: FontWeight.w600,
-  //         ),
-  //       ),
-  //       const SizedBox(height: 12),
-  //       Row(
-  //         children: [
-  //           Expanded(child: _buildFactorCard('Payment\nHistory', '100%', 'HIGH IMPACT', Colors.green)),
-  //           const SizedBox(width: 8),
-  //           Expanded(child: _buildFactorCard('Credit Card\nUtilization', '4%', 'LOW IMPACT', Colors.blue)),
-  //           const SizedBox(width: 8),
-  //           Expanded(child: _buildFactorCard('Derogatory\nMarks', '0', 'MED', Colors.teal)),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-  //
-  // Widget _buildFactorCard(String title, String value, String impact, Color impactColor) {
-  //   return Container(
-  //     padding: const EdgeInsets.all(16),
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.circular(12),
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: Colors.grey.withOpacity(0.1),
-  //           spreadRadius: 1,
-  //           blurRadius: 4,
-  //           offset: const Offset(0, 2),
-  //         ),
-  //       ],
-  //     ),
-  //     child: Column(
-  //       children: [
-  //         Text(
-  //           title,
-  //           textAlign: TextAlign.center,
-  //           style: const TextStyle(
-  //             color: Colors.grey,
-  //             fontSize: 12,
-  //           ),
-  //         ),
-  //         const SizedBox(height: 8),
-  //         Text(
-  //           value,
-  //           style: const TextStyle(
-  //             fontSize: 24,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //         const SizedBox(height: 8),
-  //         Container(
-  //           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-  //           decoration: BoxDecoration(
-  //             color: impactColor.withOpacity(0.1),
-  //             borderRadius: BorderRadius.circular(4),
-  //           ),
-  //           child: Text(
-  //             impact,
-  //             style: TextStyle(
-  //               color: impactColor,
-  //               fontSize: 10,
-  //               fontWeight: FontWeight.w600,
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
   //
   // Widget _buildAccountDetails(BuildContext context) {
   //   return Column(
@@ -482,35 +240,7 @@ class HomePage extends StatelessWidget {
   //   );
   // }
   //
-  // Widget _buildSmallCircularProgress(int value, int maxValue) {
-  //   final percentage = value / maxValue;
-  //   return SizedBox(
-  //     width: 50,
-  //     height: 50,
-  //     child: Stack(
-  //       alignment: Alignment.center,
-  //       children: [
-  //         SizedBox(
-  //           width: 50,
-  //           height: 50,
-  //           child: CircularProgressIndicator(
-  //             value: percentage,
-  //             strokeWidth: 4,
-  //             backgroundColor: Colors.grey[300],
-  //             valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
-  //           ),
-  //         ),
-  //         Text(
-  //           value.toString(),
-  //           style: const TextStyle(
-  //             fontSize: 14,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+
   //
   // Widget _buildUtilizationBars() {
   //   return Column(

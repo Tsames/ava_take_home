@@ -4,14 +4,14 @@ class AnimatedDial extends StatelessWidget {
   final int value;
   final int maxValue;
   final String numberText;
-  final String? subText;
+  final String subText;
 
   const AnimatedDial({
     super.key,
     required this.value,
     required this.maxValue,
     required this.numberText,
-    this.subText,
+    required this.subText,
   });
 
   @override
@@ -40,9 +40,28 @@ class AnimatedDial extends StatelessWidget {
                 valueColor: AlwaysStoppedAnimation<Color>(dialProgressColor),
               ),
             ),
-            Text(
-              numberText,
-              style: numberTextTheme,
+            SizedBox(
+              width: 80,
+              height: 80,
+              child: Padding(
+                padding: EdgeInsetsGeometry.all(10),
+                child: Column(
+                  children: [
+                    FittedBox(
+                      child: Text(
+                        numberText,
+                        style: numberTextTheme,
+                      ),
+                    ),
+                    FittedBox(
+                      child: Text(
+                        subText,
+                        style: subTextTheme,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ],
         ),

@@ -58,9 +58,17 @@ class AvaApp extends StatelessWidget {
               color: Color(0xFFA448FF)
           ),
           labelLarge: TextStyle(
-              fontFamily: "AtSlamCnd",
+              fontFamily: "AtSlam",
               fontSize: 36,
               fontWeight: FontWeight.w600,
+              color: Color(0xFF2A1E39),
+              letterSpacing: 0,
+          ),
+          labelSmall: TextStyle(
+            fontFamily: "AtHauss",
+            fontSize: 8,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF2A1E39),
           ),
         )
       ),
