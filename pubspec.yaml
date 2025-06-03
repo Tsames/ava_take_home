@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^2.6.1
   riverpod_annotation: ^2.6.1
+  fl_chart: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -91,5 +92,13 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+fonts:
+  - family: "AtHauss"
+    fonts:
+      - asset: assets/fonts/AtHauss-Regular.otf
+  - family: "AtSlamCnd"
+    fonts:
+      - assets: assets/fonts/AtSlamCnd-Regular.otf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
