@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meet_ava_take_home/credit_chart.dart';
 import 'package:meet_ava_take_home/credit_details.dart';
 
+import 'account_details.dart';
 import 'credit_factors.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,8 +32,8 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 24),
                     CreditFactors(),
                     const SizedBox(height: 24),
-                    // _buildAccountDetails(context),
-                    // const SizedBox(height: 24),
+                    AccountDetails(),
+                    const SizedBox(height: 24),
                     // _buildCreditCardAccounts(context),
                   ],
                 ),

@@ -8,6 +8,7 @@ class CreditChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardBackgroundColor = Theme.of(context).colorScheme.primaryContainer;
     final cardBorderColor = Theme.of(context).colorScheme.outline;
+
     final headlineText = Theme.of(context).textTheme.headlineMedium;
     final cardHeadlineText = Theme.of(context).textTheme.headlineSmall;
     final cardBodyLightText = Theme.of(context).textTheme.bodyMedium;
