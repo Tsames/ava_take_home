@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meet_ava_take_home/credit_chart.dart';
-import 'package:meet_ava_take_home/credit_details.dart';
 
-import 'account_details.dart';
-import 'credit_factors.dart';
+import 'home_widgets/account_details.dart';
+import 'home_widgets/credit_chart.dart';
+import 'home_widgets/credit_details.dart';
+import 'home_widgets/credit_factors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

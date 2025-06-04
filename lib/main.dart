@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:meet_ava_take_home/home_page.dart';
+import 'package:meet_ava_take_home/pages/home_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
