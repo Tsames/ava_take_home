@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/rating_thresholds.dart';
+import 'package:meet_ava_take_home/common/util/Money.dart';
+import 'package:meet_ava_take_home/repository/score_provider.dart';
 
 import '../../../common/ratings.dart';
 import '../animated/animated_dial.dart';
 
-class CreditUtilization extends StatelessWidget {
-  final int totalBalance;
+class CreditUtilization extends ConsumerWidget {
   final int totalLimit;
 
-  const CreditUtilization({super.key, this.totalBalance = 8390, this.totalLimit = 200900});
+  const CreditUtilization({super.key, this.totalLimit = 200900});
 
   static const ratingThresholds = RatingThresholds(
     poor: 0.09,
@@ -17,27 +19,6 @@ class CreditUtilization extends StatelessWidget {
     good: 0.74,
     excellent: 1,
   );
-
-  String _formatDollars(int amount) {
-    final absAmount = amount.abs();
-    final sign = amount < 0 ? '-' : '';
-
-    if (absAmount < 1000) {
-      return '$sign\$$absAmount';
-    }
-
-    final parts = absAmount.toString().split('').reversed.toList();
-    final buffer = StringBuffer(sign + r'$');
-
-    for (int i = parts.length - 1; i >= 0; i--) {
-      buffer.write(parts[i]);
-      if (i > 0 && i % 3 == 0) {
-        buffer.write(',');
-      }
-    }
-
-    return buffer.toString();
-  }
 
   Rating _getRating(double percentage) {
     // The rating thresholds are reversed since low utilization is good
@@ -49,10 +30,12 @@ class CreditUtilization extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cardHeaderText = Theme.of(context).textTheme.headlineSmall;
     final cardText = Theme.of(context).textTheme.bodyMedium;
-    final greenText = Theme.of(context).colorScheme.tertiary;
+
+    final money = Money();
+    final totalBalance = ref.watch(totalBalanceProvider);
 
     final rating = _getRating(totalBalance / totalLimit);
 
@@ -73,20 +56,20 @@ class CreditUtilization extends StatelessWidget {
                       children: [
                         TextSpan(text: 'Total balance:'),
                         TextSpan(
-                          text: " ${_formatDollars(totalBalance)}",
-                          style: TextStyle(color: greenText),
+                          text: " ${money.formatDollars(totalBalance)}",
+                          style: TextStyle(color: rating.color),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text('Total limit: ${_formatDollars(totalLimit)}', style: cardText),
+                  Text('Total limit: ${money.formatDollars(totalLimit)}', style: cardText),
                 ],
               ),
             ),
             SizedBox(
-              height: 75,
-              width: 75,
+              height: 90,
+              width: 90,
               child: AnimatedDial(
                 value: ((totalBalance / totalLimit) * 100).toInt(),
                 maxValue: 100,

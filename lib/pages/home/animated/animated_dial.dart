@@ -114,13 +114,13 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
                       FittedBox(
                         child: Text(
                           "${(_animation.value * widget.maxValue).toInt()}${widget.numberText}",
-                          style: TextStyle(color: textColor, fontSize: size * 0.33, fontWeight: FontWeight.w600),
+                          style: TextStyle(color: textColor, fontSize: size * 0.28, fontWeight: FontWeight.w600),
                         ),
                       ),
                       FittedBox(
                         child: Text(
                           rating.label,
-                          style: TextStyle(color: textColor, fontSize: size * 0.1, fontWeight: FontWeight.w600),
+                          style: TextStyle(color: textColor, fontSize: size * 0.09, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],

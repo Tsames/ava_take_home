@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/util/Money.dart';
+
 class AnimatedUtilizationSlider extends StatefulWidget {
   final int utilization;
   final int total;
-  final String valueLabel;
   final Duration duration;
 
   const AnimatedUtilizationSlider({
     super.key,
     required this.utilization,
     required this.total,
-    required this.valueLabel,
-    this.duration = const Duration(milliseconds: 3000),
+    this.duration = const Duration(milliseconds: 1000),
   });
 
   @override
@@ -62,6 +62,8 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
     final progressBarTick = Theme.of(context).colorScheme.tertiary;
     final markerBackgroundColor = Theme.of(context).colorScheme.onPrimary;
 
+    final money = Money();
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -98,7 +100,7 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              "${widget.valueLabel}${(_animation.value * widget.total).toInt()}",
+                              money.formatDollars(widget.utilization),
                               style: const TextStyle(color: Colors.white, fontSize: 12),
                             ),
                           ),
