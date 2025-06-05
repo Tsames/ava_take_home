@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:meet_ava_take_home/pages/home_page.dart';
+import 'package:meet_ava_take_home/pages/home/home_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -41,16 +41,17 @@ class AvaApp extends StatelessWidget {
           surface: const Color(0xFFF2F0ED),
         ),
         textTheme: const TextTheme(
+          //Section Headline style
+          headlineLarge: TextStyle(
+            fontFamily: "AtHauss",
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF2A1E39),
+          ),
           // Card Headline Text
           headlineSmall: TextStyle(
             fontFamily: "AtHauss",
             fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF2A1E39),
-          ),
-          headlineMedium: TextStyle(
-            fontFamily: "AtHauss",
-            fontSize: 22,
             fontWeight: FontWeight.w600,
             color: Color(0xFF2A1E39),
           ),
@@ -68,20 +69,12 @@ class AvaApp extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: Color(0xFFA448FF),
           ),
-          // Large Animated Dial Text
           // Points Style
           labelMedium: TextStyle(
             fontFamily: "AtHauss",
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Color(0xFFFFFFFF),
-          ),
-          //Small Animated Dial Text
-          labelSmall: TextStyle(
-            fontFamily: "AtHauss",
-            fontSize: 8,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF2A1E39),
           ),
         ),
       ),
