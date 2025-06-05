@@ -25,6 +25,7 @@ class AccountDetails extends StatelessWidget {
             border: Border.all(color: cardBorderColor, width: 1.0),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _buildUtilizationSlider(context, 0.3),
               Row(

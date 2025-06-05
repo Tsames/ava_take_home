@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meet_ava_take_home/animated_dial.dart';
+
+import 'animated_dial.dart';
 
 class CreditDetails extends StatelessWidget {
   const CreditDetails({super.key});
@@ -11,6 +12,13 @@ class CreditDetails extends StatelessWidget {
     final cardHeadline = Theme.of(context).textTheme.headlineSmall;
     final cardBodyLightText = Theme.of(context).textTheme.bodyMedium;
     final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
+
+    animatedDialCallBack(double animationValue) {
+      if (animationValue < 0.25) return 'Poor';
+      if (animationValue < 0.5) return 'Fair';
+      if (animationValue < 0.75) return 'Good';
+      return 'Excellent';
+    }
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -57,11 +65,18 @@ class CreditDetails extends StatelessWidget {
               ],
             ),
           ),
-          AnimatedDial(
-            value: 720,
-            maxValue: 850,
-            numberText: "720",
-            subText: "Good",
+          SizedBox(
+            width: 75,
+            height: 75,
+            child: AnimatedDial(
+              value: 720,
+              maxValue: 850,
+              textBuilder: animatedDialCallBack,
+              colorTween: ColorTween(
+                begin: const Color(0xFFFF7D60),
+                end: const Color(0xFF48A388),
+              ),
+            ),
           ),
         ],
       ),
