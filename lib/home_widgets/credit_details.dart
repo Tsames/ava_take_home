@@ -71,11 +71,9 @@ class CreditDetails extends StatelessWidget {
             child: AnimatedDial(
               value: 720,
               maxValue: 850,
-              numberText: "720",
-              subText: "Good",
               textBuilder: animatedDialCallBack,
               colorTween: ColorTween(
-                begin: const Color(0xFFC3543B),
+                begin: const Color(0xFFFF7D60),
                 end: const Color(0xFF48A388),
               ),
             ),

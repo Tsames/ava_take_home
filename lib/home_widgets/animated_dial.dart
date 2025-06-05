@@ -4,7 +4,6 @@ class AnimatedDial extends StatefulWidget {
   final int value;
   final int maxValue;
   final String numberText;
-  final String subText;
   final String Function(double animationValue) textBuilder;
   final ColorTween colorTween;
 
@@ -12,8 +11,7 @@ class AnimatedDial extends StatefulWidget {
     super.key,
     required this.value,
     required this.maxValue,
-    required this.numberText,
-    required this.subText,
+    this.numberText = "",
     required this.textBuilder,
     required this.colorTween,
   });
@@ -73,8 +71,8 @@ class _AnimatedDialState extends State<AnimatedDial>
 
   @override
   Widget build(BuildContext context) {
-    final numberTextTheme = Theme.of(context).textTheme.labelLarge;
-    final subTextTheme = Theme.of(context).textTheme.labelSmall;
+    final textColor = Theme.of(context).colorScheme.onPrimary;
+
     final dialProgressColor = Theme.of(context).colorScheme.tertiary;
     final dialBackgroundColor = Theme.of(context).colorScheme.tertiaryContainer;
 
@@ -108,14 +106,22 @@ class _AnimatedDialState extends State<AnimatedDial>
                     children: [
                       FittedBox(
                         child: Text(
-                          "${(_animation.value * widget.maxValue).toInt()}",
-                          style: TextStyle(fontSize: size * 0.33),
+                          "${(_animation.value * widget.maxValue).toInt()}${widget.numberText}",
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: size * 0.33,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       FittedBox(
                         child: Text(
                           widget.textBuilder(_animation.value),
-                          style: subTextTheme,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: size * 0.1,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],

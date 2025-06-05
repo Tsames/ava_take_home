@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'animated_dial.dart';
+
 class CreditUtilization extends StatelessWidget {
   final double totalBalance;
   final double totalLimit;
@@ -23,6 +25,13 @@ class CreditUtilization extends StatelessWidget {
 
     final cardHeaderText = Theme.of(context).textTheme.headlineSmall;
     final cardText = Theme.of(context).textTheme.bodySmall;
+
+    animatedDialCallBack(double animationValue) {
+      if (animationValue < 0.25) return 'Excellent';
+      if (animationValue < 0.5) return 'Good';
+      if (animationValue < 0.75) return 'Fair';
+      return 'Poor';
+    }
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -62,15 +71,19 @@ class CreditUtilization extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                height: 72,
-                width: 72,
-                // child: AnimatedDial(
-                //   value: 4,
-                //   maxValue: 100,
-                //   numberText: "4%",
-                //   subText: "Excellent",
-                // ),
+              SizedBox(
+                height: 75,
+                width: 75,
+                child: AnimatedDial(
+                  value: 4,
+                  maxValue: 100,
+                  numberText: "%",
+                  textBuilder: animatedDialCallBack,
+                  colorTween: ColorTween(
+                    begin: const Color(0xFF48A388),
+                    end: const Color(0xFFFF7D60),
+                  ),
+                ),
               ),
             ],
           ),
