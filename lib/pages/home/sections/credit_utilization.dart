@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_ava_take_home/common/rating_thresholds.dart';
 
 import '../../../common/ratings.dart';
 import '../animated/animated_dial.dart';
@@ -8,6 +9,14 @@ class CreditUtilization extends StatelessWidget {
   final int totalLimit;
 
   const CreditUtilization({super.key, this.totalBalance = 8390, this.totalLimit = 200900});
+
+  static const ratingThresholds = RatingThresholds(
+    poor: 0.09,
+    unsatisfactory: 0.29,
+    fair: 0.49,
+    good: 0.74,
+    excellent: 1,
+  );
 
   String _formatDollars(int amount) {
     final absAmount = amount.abs();
@@ -30,11 +39,12 @@ class CreditUtilization extends StatelessWidget {
     return buffer.toString();
   }
 
-  Rating _getUtilizationRating(double percentage) {
-    if (percentage <= 0.09) return Rating.excellent;
-    if (percentage <= 0.29) return Rating.good;
-    if (percentage <= 0.49) return Rating.fair;
-    if (percentage <= 0.74) return Rating.unsatisfactory;
+  Rating _getRating(double percentage) {
+    // The rating thresholds are reversed since low utilization is good
+    if (percentage <= ratingThresholds.poor) return Rating.excellent;
+    if (percentage <= ratingThresholds.unsatisfactory) return Rating.good;
+    if (percentage <= ratingThresholds.fair) return Rating.fair;
+    if (percentage <= ratingThresholds.good) return Rating.unsatisfactory;
     return Rating.poor;
   }
 
@@ -44,11 +54,7 @@ class CreditUtilization extends StatelessWidget {
     final cardText = Theme.of(context).textTheme.bodyMedium;
     final greenText = Theme.of(context).colorScheme.tertiary;
 
-    final rating = _getUtilizationRating(totalBalance / totalLimit);
-
-    String animatedDialCallBack(double animationValue) {
-      return _getUtilizationRating(animationValue).label;
-    }
+    final rating = _getRating(totalBalance / totalLimit);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,8 +91,8 @@ class CreditUtilization extends StatelessWidget {
                 value: ((totalBalance / totalLimit) * 100).toInt(),
                 maxValue: 100,
                 numberText: "%",
-                textBuilder: animatedDialCallBack,
-                colorTween: ColorTween(begin: rating.color, end: rating.color),
+                thresholds: ratingThresholds,
+                reversed: true,
               ),
             ),
           ],
