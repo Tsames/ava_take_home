@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meet_ava_take_home/common/rating_thresholds.dart';
 import 'package:meet_ava_take_home/repository/score_provider.dart';
 
 import '../animated/animated_dial.dart';
 
 class CreditDetails extends ConsumerWidget {
   const CreditDetails({super.key});
+
+  static const ratingThresholds = RatingThresholds(poor: 0.2, unsatisfactory: 0.4, fair: 0.6, good: 0.8, excellent: 1);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,13 +17,6 @@ class CreditDetails extends ConsumerWidget {
     final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
 
     final creditScore = ref.watch(creditScoreProvider);
-
-    animatedDialCallBack(double animationValue) {
-      if (animationValue < 0.25) return 'Poor';
-      if (animationValue < 0.5) return 'Fair';
-      if (animationValue < 0.75) return 'Good';
-      return 'Excellent';
-    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,12 +56,7 @@ class CreditDetails extends ConsumerWidget {
         SizedBox(
           width: 75,
           height: 75,
-          child: AnimatedDial(
-            value: creditScore,
-            maxValue: 850,
-            textBuilder: animatedDialCallBack,
-            colorTween: ColorTween(begin: const Color(0xFFFF7D60), end: const Color(0xFF48A388)),
-          ),
+          child: AnimatedDial(value: creditScore, maxValue: 850, thresholds: ratingThresholds),
         ),
       ],
     );
