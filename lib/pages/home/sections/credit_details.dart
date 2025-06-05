@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meet_ava_take_home/repository/score_provider.dart';
 
 import '../animated/animated_dial.dart';
 
-class CreditDetails extends StatelessWidget {
+class CreditDetails extends ConsumerWidget {
   const CreditDetails({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cardHeadline = Theme.of(context).textTheme.headlineSmall;
     final cardBodyLightText = Theme.of(context).textTheme.bodyMedium;
     final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
+
+    final creditScore = ref.watch(creditScoreProvider);
 
     animatedDialCallBack(double animationValue) {
       if (animationValue < 0.25) return 'Poor';
@@ -57,7 +61,7 @@ class CreditDetails extends StatelessWidget {
           width: 75,
           height: 75,
           child: AnimatedDial(
-            value: 720,
+            value: creditScore,
             maxValue: 850,
             textBuilder: animatedDialCallBack,
             colorTween: ColorTween(begin: const Color(0xFFFF7D60), end: const Color(0xFF48A388)),

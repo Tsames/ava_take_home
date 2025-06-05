@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/pages/home/home_page_section.dart';
 import 'package:meet_ava_take_home/pages/home/home_page_styled_card.dart';
 import 'package:meet_ava_take_home/pages/home/sections/account_details.dart';
@@ -8,15 +11,26 @@ import 'package:meet_ava_take_home/pages/home/sections/credit_details.dart';
 import 'package:meet_ava_take_home/pages/home/sections/credit_factors.dart';
 import 'package:meet_ava_take_home/pages/home/sections/credit_utilization.dart';
 
-class HomePage extends StatelessWidget {
+import '../../repository/score_provider.dart';
+
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(toolbarHeight: 0, backgroundColor: Theme.of(context).colorScheme.secondaryContainer),
       backgroundColor: Theme.of(context).colorScheme.surface,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Generate random number between 100 and 750
+          final random = Random();
+          final newScore = random.nextInt(651) + 100; // 651 + 100 = max of 750
+          ref.read(creditScoreProvider.notifier).state = newScore;
+        },
+        child: const Icon(Icons.refresh),
+      ),
       body: SafeArea(
         child: Column(
           children: [

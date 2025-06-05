@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/pages/home/home_page.dart';
 
 void main() {
@@ -11,7 +12,7 @@ void main() {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
-  runApp(const AvaApp());
+  runApp(const ProviderScope(child: AvaApp()));
 }
 
 class AvaApp extends StatelessWidget {
