@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'animated_dial.dart';
+import 'animated/animated_dial.dart';
 
 class CreditUtilization extends StatelessWidget {
   final double totalBalance;
@@ -59,9 +59,7 @@ class CreditUtilization extends StatelessWidget {
                           TextSpan(text: 'Total balance:'),
                           TextSpan(
                             text: " \$8,390",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.tertiary,
-                            ),
+                            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
                           ),
                         ],
                       ),
@@ -79,10 +77,7 @@ class CreditUtilization extends StatelessWidget {
                   maxValue: 100,
                   numberText: "%",
                   textBuilder: animatedDialCallBack,
-                  colorTween: ColorTween(
-                    begin: const Color(0xFF48A388),
-                    end: const Color(0xFFFF7D60),
-                  ),
+                  colorTween: ColorTween(begin: const Color(0xFF48A388), end: const Color(0xFFFF7D60)),
                 ),
               ),
             ],
@@ -90,11 +85,7 @@ class CreditUtilization extends StatelessWidget {
           // Credit rating
           Text(
             creditRating,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF10B981),
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF10B981)),
           ),
           const SizedBox(height: 12),
           _buildUtilizationBar(),
@@ -116,10 +107,7 @@ class CreditUtilization extends StatelessWidget {
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xFF48A388),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(4),
-                  bottomLeft: Radius.circular(4),
-                ),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
               ),
             ),
           ),
@@ -129,10 +117,7 @@ class CreditUtilization extends StatelessWidget {
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xFFF2A088),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(4),
-                  bottomRight: Radius.circular(4),
-                ),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
               ),
             ),
           ),
@@ -146,18 +131,9 @@ class CreditUtilization extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('0-9%', style: TextStyle(fontSize: 12, color: Color(0xFF48A388))),
-        Text(
-          '10-29%',
-          style: TextStyle(fontSize: 12, color: Color(0xFF736B7C)),
-        ),
-        Text(
-          '30-49%',
-          style: TextStyle(fontSize: 12, color: Color(0xFF736B7C)),
-        ),
-        Text(
-          '50-74%',
-          style: TextStyle(fontSize: 12, color: Color(0xFF736B7C)),
-        ),
+        Text('10-29%', style: TextStyle(fontSize: 12, color: Color(0xFF736B7C))),
+        Text('30-49%', style: TextStyle(fontSize: 12, color: Color(0xFF736B7C))),
+        Text('50-74%', style: TextStyle(fontSize: 12, color: Color(0xFF736B7C))),
         Text('<75%', style: TextStyle(fontSize: 12, color: Color(0xFF736B7C))),
       ],
     );
