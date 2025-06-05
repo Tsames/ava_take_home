@@ -5,7 +5,7 @@ class CreditFactors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardHeadlineText = Theme.of(context).textTheme.headlineMedium;
+    final cardHeadlineText = Theme.of(context).textTheme.headlineLarge;
 
     final highImpactColor = Color(0xFF003928);
     final mediumImpactColor = Color(0xFF48A388);
@@ -101,46 +101,23 @@ class CreditFactorsCard extends StatelessWidget {
     final cardValueText = Theme.of(context).textTheme.headlineMedium;
 
     return Container(
-      height: 144,
-      width: 140,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      height: 150,
+      width: 120,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           FittedBox(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: cardTitleText?.copyWith(fontSize: 14),
-            ),
+            child: Text(title, textAlign: TextAlign.center, style: cardTitleText?.copyWith(fontSize: 14)),
           ),
-          const SizedBox(height: 20),
           FittedBox(child: Text(value, style: cardValueText)),
-          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
-              color: impactColor,
-              borderRadius: BorderRadius.circular(4),
-            ),
+            decoration: BoxDecoration(color: impactColor, borderRadius: BorderRadius.circular(4)),
             child: Text(
               impact,
-              style: TextStyle(
-                color: impactTextColor,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-              ),
+              style: TextStyle(color: impactTextColor, fontSize: 11, fontWeight: FontWeight.w700),
             ),
           ),
         ],

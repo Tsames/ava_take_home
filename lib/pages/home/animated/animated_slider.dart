@@ -26,7 +26,7 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
   void initState() {
     super.initState();
     _controller = AnimationController(duration: widget.duration, vsync: this);
-    final initialValue = double.parse((widget.utilization / widget.total).toStringAsFixed(2));
+    final initialValue = widget.utilization / widget.total;
     _animation = Tween<double>(
       begin: 0,
       end: initialValue,
@@ -38,8 +38,8 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
   void didUpdateWidget(AnimatedUtilizationSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.utilization != oldWidget.utilization) {
-      final oldValue = double.parse((oldWidget.utilization / oldWidget.total).toStringAsFixed(2));
-      final newValue = double.parse((widget.utilization / widget.total).toStringAsFixed(2));
+      final oldValue = oldWidget.utilization / oldWidget.total;
+      final newValue = widget.utilization / widget.total;
       _animation = Tween<double>(
         begin: oldValue,
         end: newValue,
@@ -66,6 +66,7 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
+
         return AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
@@ -73,9 +74,9 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
               children: [
                 // Progress bar background (static)
                 Positioned(
-                  bottom: height * 0.1,
                   left: 0,
                   right: 0,
+                  bottom: height * 0.1,
                   child: Container(
                     height: 8,
                     decoration: BoxDecoration(color: progressBarBackground, borderRadius: BorderRadius.circular(4)),
@@ -83,35 +84,36 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
                 ),
 
                 // Narrow progress tick (animated)
-                Positioned(
-                  bottom: height * 0.1,
-                  left: (width * _animation.value),
-                  child: Container(
-                    width: 3,
-                    height: 8,
-                    decoration: BoxDecoration(color: progressBarTick, borderRadius: BorderRadius.circular(1.5)),
-                  ),
-                ),
-
-                // Marker with label (animated)
-                Positioned(
-                  bottom: height * 0.3,
-                  left: (width * _animation.value) - 17,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                        decoration: BoxDecoration(color: markerBackgroundColor, borderRadius: BorderRadius.circular(4)),
-                        child: Text(
-                          "${widget.valueLabel}${(_animation.value * widget.total).toInt()}",
-                          style: const TextStyle(color: Colors.white, fontSize: 12),
-                        ),
+                Stack(
+                  children: [
+                    Positioned(
+                      bottom: height * 0.1,
+                      left: (width * _animation.value),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: markerBackgroundColor,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              "${widget.valueLabel}${(_animation.value * widget.total).toInt()}",
+                              style: const TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                          ),
+                          // Triangle pointer
+                          CustomPaint(painter: TrianglePainter(), size: const Size(12, 8)),
+                          SizedBox(height: height * 0.05),
+                          Container(
+                            width: 3,
+                            height: 8,
+                            decoration: BoxDecoration(color: progressBarTick, borderRadius: BorderRadius.circular(1.5)),
+                          ),
+                        ],
                       ),
-                      // Triangle pointer
-                      CustomPaint(painter: TrianglePainter(), size: const Size(12, 8)),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             );
