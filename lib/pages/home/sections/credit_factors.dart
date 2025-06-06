@@ -10,8 +10,8 @@ class CreditFactors extends StatelessWidget {
   static const mediumImpactColor = AppColors.middleGreen;
   static const lowImpactColor = AppColors.lightGreen;
 
-  static const highImpactText = AppColors.whiteText;
-  static const mediumImpactText = AppColors.whiteText;
+  static const highImpactText = AppColors.white;
+  static const mediumImpactText = AppColors.white;
   static const lowImpactText = AppColors.darkGreen;
 
   @override

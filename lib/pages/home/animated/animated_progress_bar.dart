@@ -72,7 +72,7 @@ class _AnimatedProgressBarState extends State<AnimatedProgressBar> with SingleTi
                   child: Container(
                     height: height,
                     width: width,
-                    decoration: BoxDecoration(color: AppColors.cardOutline, borderRadius: BorderRadius.circular(4)),
+                    decoration: BoxDecoration(color: AppColors.outline, borderRadius: BorderRadius.circular(4)),
                   ),
                 ),
 

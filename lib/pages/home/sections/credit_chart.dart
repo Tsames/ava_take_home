@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
 
+import '../../../common/repository/state_provider.dart';
 import '../../../common/styles/app_colors.dart';
-import '../../../repository/state_provider.dart';
 
 class CreditChart extends ConsumerStatefulWidget {
   const CreditChart({super.key});
@@ -75,7 +75,7 @@ class _CreditChartState extends ConsumerState<CreditChart> with SingleTickerProv
         const SizedBox(height: 10),
         Text(
           'Experian',
-          style: AppTextStyles.cardSmallBodyStyle.copyWith(color: AppColors.pinkText, fontWeight: FontWeight.w600),
+          style: AppTextStyles.cardSmallBodyStyle.copyWith(color: AppColors.pink, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 24),
         _buildChart(),
@@ -88,7 +88,7 @@ class _CreditChartState extends ConsumerState<CreditChart> with SingleTickerProv
                 'Last 12 months',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.cardSmallBodyStyle.copyWith(
-                  color: AppColors.deepPurpleText,
+                  color: AppColors.deepPurple,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -96,7 +96,7 @@ class _CreditChartState extends ConsumerState<CreditChart> with SingleTickerProv
                 'Score calculated using VantageScore 3.0',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.cardSmallBodyStyle.copyWith(
-                  color: AppColors.lightPurpleText,
+                  color: AppColors.lightPurple,
                   fontWeight: FontWeight.w400,
                 ),
               ),

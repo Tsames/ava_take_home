@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: CustomAppBar(), backgroundColor: AppColors.headBackground),
-      backgroundColor: AppColors.homeBackground,
+      backgroundColor: AppColors.pageBackground,
       floatingActionButton: FloatingHomeButton(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

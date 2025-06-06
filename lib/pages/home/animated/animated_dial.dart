@@ -101,7 +101,7 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
                     child: CircularProgressIndicator(
                       value: _animation.value,
                       strokeWidth: size * 0.1,
-                      backgroundColor: AppColors.cardOutline,
+                      backgroundColor: AppColors.outline,
                       valueColor: AlwaysStoppedAnimation<Color>(rating.color),
                     ),
                   ),
@@ -113,8 +113,8 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
                           "${(_animation.value * widget.maxValue).toInt()}${widget.numberText}",
                           style: TextStyle(
                             fontFamily: "AtSlam",
-                            color: AppColors.deepPurpleText,
-                            fontSize: size * 0.3,
+                            color: AppColors.deepPurple,
+                            fontSize: size * 0.35,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -124,7 +124,7 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
                           rating.label,
                           style: TextStyle(
                             fontFamily: "AtHauss",
-                            color: AppColors.deepPurpleText,
+                            color: AppColors.deepPurple,
                             fontSize: size * 0.09,
                             fontWeight: FontWeight.w600,
                           ),
