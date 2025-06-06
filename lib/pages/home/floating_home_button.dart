@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/repository/state_provider.dart';
 import '../../common/styles/app_colors.dart';
-import '../../repository/state_provider.dart';
 
 class FloatingHomeButton extends ConsumerWidget {
   const FloatingHomeButton({super.key});

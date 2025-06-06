@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/rating_thresholds.dart';
+import 'package:meet_ava_take_home/common/repository/state_provider.dart';
 import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
 import 'package:meet_ava_take_home/pages/home/home_page_styled_card.dart';
-import 'package:meet_ava_take_home/repository/state_provider.dart';
 
 import '../../../common/styles/app_colors.dart';
 import '../animated/animated_dial.dart';
@@ -50,7 +50,7 @@ class CreditDetails extends ConsumerWidget {
                   Text(
                     'Experian',
                     style: AppTextStyles.cardSmallBodyStyle.copyWith(
-                      color: AppColors.pinkText,
+                      color: AppColors.pink,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

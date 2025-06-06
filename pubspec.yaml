@@ -95,13 +95,13 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-fonts:
-  - family: "AtHauss"
-    fonts:
-      - asset: assets/fonts/AtHauss-Regular.otf
-  - family: "AtSlam"
-    fonts:
-      - asset: assets/fonts/AtSlamCnd-Regular.otf
+  fonts:
+    - family: AtHauss
+      fonts:
+        - asset: assets/fonts/AtHauss-Regular.otf
+    - family: AtSlam
+      fonts:
+        - asset: assets/fonts/AtSlamCnd-Regular.otf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

@@ -1,4 +1,4 @@
-class Money {
+class StringFormater {
   String formatDollars(int amount) {
     final absAmount = amount.abs();
     final sign = amount < 0 ? '-' : '';

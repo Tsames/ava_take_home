@@ -14,7 +14,7 @@ class StyledCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.cardOutline, width: 1),
+        border: Border.all(color: AppColors.outline, width: 1),
       ),
       padding: padding ?? const EdgeInsets.all(16),
       child: child, // The variable content

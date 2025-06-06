@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meet_ava_take_home/common/util/string_formater.dart';
 
 import '../../../common/styles/app_colors.dart';
-import '../../../common/util/Money.dart';
 
 class AnimatedUtilizationSlider extends StatefulWidget {
   final int utilization;
@@ -59,7 +59,7 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
 
   @override
   Widget build(BuildContext context) {
-    final money = Money();
+    final format = StringFormater();
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -92,12 +92,12 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                             decoration: BoxDecoration(
-                              color: AppColors.deepPurpleText,
+                              color: AppColors.deepPurple,
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              money.formatDollars(widget.utilization),
-                              style: const TextStyle(color: AppColors.whiteText, fontSize: 12),
+                              format.formatDollars(widget.utilization),
+                              style: const TextStyle(color: AppColors.white, fontSize: 12),
                             ),
                           ),
                           // Triangle pointer
@@ -129,7 +129,7 @@ class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.deepPurpleText
+      ..color = AppColors.deepPurple
       ..style = PaintingStyle.fill;
 
     final path = Path();

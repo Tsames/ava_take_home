@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meet_ava_take_home/common/user_data.dart';
 
-import '../common/credit_account.dart';
+import '../credit_account.dart';
 
 final creditScoreProvider = StateProvider<int>((ref) => 720);
 final totalBalanceProvider = StateProvider<int>((ref) => 8390);
@@ -22,4 +23,18 @@ final creditAccountsProvider = StateProvider<List<CreditAccount>>(
       reportedDate: 'Reported on June 20, 2023',
     ),
   ],
+);
+final userDataProvider = StateProvider<UserData>(
+  (ref) => UserData(
+    employmentType: EmploymentType.fullTime,
+    employer: "Apple Inc",
+    jobTitle: "Software Engineer",
+    salary: 150000,
+    payFrequency: PayFrequency.biWeekly,
+    employerAddress: "Apple One Apple Park Way, Cupertino, CA 95014",
+    isDirectDeposit: true,
+    nextPayDay: DateTime.now(),
+    yearsWithEmployer: 1,
+    monthsWithEmployer: 3,
+  ),
 );
