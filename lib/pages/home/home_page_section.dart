@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
 
 import 'home_page_styled_card.dart';
 
@@ -10,13 +11,11 @@ class HomePageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final headlineTextStyle = Theme.of(context).textTheme.headlineLarge;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(sectionHeader, style: headlineTextStyle),
+        Text(sectionHeader, style: AppTextStyles.sectionHeadlineStyle),
         const SizedBox(height: 12),
         StyledCard(child: child),
       ],
