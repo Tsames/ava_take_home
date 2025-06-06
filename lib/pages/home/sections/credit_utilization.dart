@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/rating_thresholds.dart';
+import 'package:meet_ava_take_home/common/styles/app_colors.dart';
+import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
 import 'package:meet_ava_take_home/common/util/Money.dart';
-import 'package:meet_ava_take_home/repository/score_provider.dart';
+import 'package:meet_ava_take_home/repository/state_provider.dart';
 
 import '../../../common/ratings.dart';
 import '../animated/animated_dial.dart';
@@ -31,14 +33,9 @@ class CreditUtilization extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cardHeaderText = Theme.of(context).textTheme.headlineSmall;
-    final cardText = Theme.of(context).textTheme.bodyMedium;
-
     final money = Money();
     final totalBalance = ref.watch(totalBalanceProvider);
-
     final rating = _getRating(totalBalance / totalLimit);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -52,7 +49,7 @@ class CreditUtilization extends ConsumerWidget {
                 children: [
                   Text.rich(
                     TextSpan(
-                      style: cardHeaderText,
+                      style: AppTextStyles.cardHeadlineStyle,
                       children: [
                         TextSpan(text: 'Total balance:'),
                         TextSpan(
@@ -63,7 +60,7 @@ class CreditUtilization extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text('Total limit: ${money.formatDollars(totalLimit)}', style: cardText),
+                  Text('Total limit: ${money.formatDollars(totalLimit)}', style: AppTextStyles.cardBodyDetailsStyle),
                 ],
               ),
             ),
@@ -125,7 +122,7 @@ class CreditUtilization extends ConsumerWidget {
 
   Widget _buildUtilizationLabels(Rating rating) {
     Color getLabelColor(int ratingId) {
-      return rating.numericValue == ratingId ? rating.color : const Color(0xFF736B7C);
+      return rating.numericValue == ratingId ? rating.color : AppColors.lightPurpleText;
     }
 
     return Row(

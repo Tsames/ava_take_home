@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
+
+import '../../../common/styles/app_colors.dart';
 
 class CreditFactors extends StatelessWidget {
   const CreditFactors({super.key});
 
+  static const highImpactColor = AppColors.darkGreen;
+  static const mediumImpactColor = AppColors.middleGreen;
+  static const lowImpactColor = AppColors.lightGreen;
+
+  static const highImpactText = AppColors.whiteText;
+  static const mediumImpactText = AppColors.whiteText;
+  static const lowImpactText = AppColors.darkGreen;
+
   @override
   Widget build(BuildContext context) {
-    final cardHeadlineText = Theme.of(context).textTheme.headlineLarge;
-
-    final highImpactColor = Color(0xFF003928);
-    final mediumImpactColor = Color(0xFF48A388);
-    final lowImpactColor = Color(0xFFA9EACE);
-
-    final highImpactText = Colors.white;
-    final mediumImpactText = Colors.white;
-    final lowImpactText = Color(0xFF003928);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Credit factors', style: cardHeadlineText),
+        Text('Credit factors', style: AppTextStyles.sectionHeadlineStyle),
         const SizedBox(height: 12),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -97,27 +98,22 @@ class CreditFactorsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardTitleText = Theme.of(context).textTheme.headlineSmall;
-    final cardValueText = Theme.of(context).textTheme.headlineMedium;
-
     return Container(
-      height: 150,
-      width: 120,
+      width: 144,
+      height: 160,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FittedBox(
-            child: Text(title, textAlign: TextAlign.center, style: cardTitleText?.copyWith(fontSize: 14)),
-          ),
-          FittedBox(child: Text(value, style: cardValueText)),
+          Text(title, textAlign: TextAlign.center, style: AppTextStyles.cardHeadlineStyle.copyWith(fontSize: 14)),
+          Text(value, style: AppTextStyles.sectionHeadlineStyle),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(color: impactColor, borderRadius: BorderRadius.circular(4)),
             child: Text(
               impact,
-              style: TextStyle(color: impactTextColor, fontSize: 11, fontWeight: FontWeight.w700),
+              style: TextStyle(fontFamily: "Inter", color: impactTextColor, fontSize: 11, fontWeight: FontWeight.w700),
             ),
           ),
         ],

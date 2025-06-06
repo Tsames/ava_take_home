@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meet_ava_take_home/common/rating_thresholds.dart';
 
 import '../../../common/ratings.dart';
+import '../../../common/styles/app_colors.dart';
 
 class AnimatedDial extends StatefulWidget {
   final int value;
@@ -82,11 +83,7 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme.of(context).colorScheme.onPrimary;
-    final dialBackgroundColor = Theme.of(context).colorScheme.tertiaryContainer;
-
     final rating = _getRating();
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final size = constraints.maxWidth < constraints.maxHeight ? constraints.maxWidth : constraints.maxHeight;
@@ -104,7 +101,7 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
                     child: CircularProgressIndicator(
                       value: _animation.value,
                       strokeWidth: size * 0.1,
-                      backgroundColor: dialBackgroundColor,
+                      backgroundColor: AppColors.cardOutline,
                       valueColor: AlwaysStoppedAnimation<Color>(rating.color),
                     ),
                   ),
@@ -114,13 +111,23 @@ class _AnimatedDialState extends State<AnimatedDial> with SingleTickerProviderSt
                       FittedBox(
                         child: Text(
                           "${(_animation.value * widget.maxValue).toInt()}${widget.numberText}",
-                          style: TextStyle(color: textColor, fontSize: size * 0.28, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontFamily: "AtSlam",
+                            color: AppColors.deepPurpleText,
+                            fontSize: size * 0.3,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       FittedBox(
                         child: Text(
                           rating.label,
-                          style: TextStyle(color: textColor, fontSize: size * 0.09, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontFamily: "AtHauss",
+                            color: AppColors.deepPurpleText,
+                            fontSize: size * 0.09,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meet_ava_take_home/repository/score_provider.dart';
+import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
+import 'package:meet_ava_take_home/repository/state_provider.dart';
 
+import '../../../common/styles/app_colors.dart';
 import '../../../common/util/Money.dart';
 import '../animated/animated_slider.dart';
 
@@ -12,14 +14,8 @@ class AccountDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dividerColor = Theme.of(context).colorScheme.outline;
-    final cardBodyText = Theme.of(context).textTheme.headlineSmall;
-    final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
-
     final money = Money();
-
     final creditBalance = ref.watch(creditBalanceProvider);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -28,16 +24,19 @@ class AccountDetails extends ConsumerWidget {
           child: AnimatedUtilizationSlider(utilization: creditBalance, total: creditLimit),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text.rich(
               TextSpan(
                 children: [
                   TextSpan(
                     text: 'Spend limit: ${money.formatDollars(creditLimit)}',
-                    style: cardBodyText?.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: AppTextStyles.cardHeadlineLightStyle,
                   ),
-                  TextSpan(text: " Why is it different?", style: cardBodyPinkText?.copyWith(fontSize: 14)),
+                  TextSpan(
+                    text: " Why is it different?",
+                    style: TextStyle(color: AppColors.pinkText, fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
             ),
@@ -50,25 +49,25 @@ class AccountDetails extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(money.formatDollars(creditBalance), style: cardBodyText),
-                Text('Balance', style: cardBodyText?.copyWith(fontWeight: FontWeight.w400, fontSize: 14)),
+                Text(money.formatDollars(creditBalance), style: AppTextStyles.cardHeadlineStyle),
+                Text('Balance', style: AppTextStyles.cardHeadlineLightStyle),
               ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(money.formatDollars(creditLimit), style: cardBodyText),
-                Text('Credit limit', style: cardBodyText?.copyWith(fontWeight: FontWeight.w400, fontSize: 14)),
+                Text(money.formatDollars(creditLimit), style: AppTextStyles.cardHeadlineStyle),
+                Text('Credit limit', style: AppTextStyles.cardHeadlineLightStyle),
               ],
             ),
           ],
         ),
-        Divider(height: 32, color: dividerColor),
+        Divider(height: 32, color: AppColors.cardOutline),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Utilization', style: cardBodyText?.copyWith(fontWeight: FontWeight.w400)),
-            Text(money.formatPercent(creditBalance, creditLimit), style: cardBodyText),
+            Text('Utilization', style: AppTextStyles.cardHeadlineLightStyle),
+            Text(money.formatPercent(creditBalance, creditLimit), style: AppTextStyles.cardHeadlineStyle),
           ],
         ),
       ],

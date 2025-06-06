@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/styles/app_colors.dart';
 import '../../../common/util/Money.dart';
 
 class AnimatedUtilizationSlider extends StatefulWidget {
@@ -58,12 +59,7 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
 
   @override
   Widget build(BuildContext context) {
-    final progressBarBackground = Theme.of(context).colorScheme.tertiaryContainer;
-    final progressBarTick = Theme.of(context).colorScheme.tertiary;
-    final markerBackgroundColor = Theme.of(context).colorScheme.onPrimary;
-
     final money = Money();
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
@@ -81,7 +77,7 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
                   bottom: height * 0.1,
                   child: Container(
                     height: 8,
-                    decoration: BoxDecoration(color: progressBarBackground, borderRadius: BorderRadius.circular(4)),
+                    decoration: BoxDecoration(color: AppColors.lightGreen, borderRadius: BorderRadius.circular(4)),
                   ),
                 ),
 
@@ -96,12 +92,12 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                             decoration: BoxDecoration(
-                              color: markerBackgroundColor,
+                              color: AppColors.deepPurpleText,
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
                               money.formatDollars(widget.utilization),
-                              style: const TextStyle(color: Colors.white, fontSize: 12),
+                              style: const TextStyle(color: AppColors.whiteText, fontSize: 12),
                             ),
                           ),
                           // Triangle pointer
@@ -110,7 +106,10 @@ class _AnimatedUtilizationSliderState extends State<AnimatedUtilizationSlider> w
                           Container(
                             width: 3,
                             height: 8,
-                            decoration: BoxDecoration(color: progressBarTick, borderRadius: BorderRadius.circular(1.5)),
+                            decoration: BoxDecoration(
+                              color: AppColors.middleGreen,
+                              borderRadius: BorderRadius.circular(1.5),
+                            ),
                           ),
                         ],
                       ),
@@ -130,7 +129,7 @@ class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF2A1E39)
+      ..color = AppColors.deepPurpleText
       ..style = PaintingStyle.fill;
 
     final path = Path();

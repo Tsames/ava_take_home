@@ -1,39 +1,84 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
 
-class CreditChart extends StatelessWidget {
+import '../../../common/styles/app_colors.dart';
+import '../../../repository/state_provider.dart';
+
+class CreditChart extends ConsumerStatefulWidget {
   const CreditChart({super.key});
 
   @override
+  ConsumerState<CreditChart> createState() => _CreditChartState();
+}
+
+class _CreditChartState extends ConsumerState<CreditChart> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(duration: const Duration(milliseconds: 3000), vsync: this)..forward();
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  List<FlSpot> _getAnimatedSpots(double progress) {
+    final fullSpots = const [
+      FlSpot(0, 610),
+      FlSpot(1, 600),
+      FlSpot(2, 625),
+      FlSpot(3, 650),
+      FlSpot(4, 635),
+      FlSpot(5, 665),
+      FlSpot(6, 650),
+      FlSpot(7, 655),
+      FlSpot(8, 650),
+      FlSpot(9, 675),
+      FlSpot(10, 700),
+      FlSpot(11, 695),
+    ];
+    final visibleCount = (fullSpots.length * progress).ceil();
+    return fullSpots.sublist(0, visibleCount);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cardHeadlineText = Theme.of(context).textTheme.headlineSmall;
-    final cardBodyLightText = Theme.of(context).textTheme.bodyMedium;
-    final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
-    final cardPointsText = Theme.of(context).textTheme.labelMedium;
-    final cardPointsColor = Theme.of(context).colorScheme.tertiary;
-
-    final chartColor = Theme.of(context).colorScheme.tertiary;
-
+    ref.listen(chartAnimationTriggerProvider, (previous, next) {
+      _controller
+        ..reset()
+        ..forward();
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text('Credit Score', style: cardHeadlineText),
+            Text('Credit Score', style: AppTextStyles.cardHeadlineStyle),
             const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(color: cardPointsColor, borderRadius: BorderRadius.circular(12)),
-              child: Text('+2pts', style: cardPointsText),
+              decoration: BoxDecoration(color: AppColors.middleGreen, borderRadius: BorderRadius.circular(14)),
+              child: Text('+2pts', style: AppTextStyles.cardPointsStyle),
             ),
           ],
         ),
         const SizedBox(height: 10),
-        Text('Updated Today | Next May 12', style: cardBodyLightText),
+        Text('Updated Today | Next May 12', style: AppTextStyles.cardBodyDetailsStyle),
         const SizedBox(height: 10),
-        Text('Experian', style: cardBodyPinkText),
+        Text(
+          'Experian',
+          style: AppTextStyles.cardSmallBodyStyle.copyWith(color: AppColors.pinkText, fontWeight: FontWeight.w600),
+        ),
         const SizedBox(height: 24),
-        _buildChart(chartColor),
+        _buildChart(),
         const SizedBox(height: 8),
         Center(
           child: Column(
@@ -42,12 +87,18 @@ class CreditChart extends StatelessWidget {
               Text(
                 'Last 12 months',
                 textAlign: TextAlign.center,
-                style: cardBodyPinkText?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                style: AppTextStyles.cardSmallBodyStyle.copyWith(
+                  color: AppColors.deepPurpleText,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              const Text(
+              Text(
                 'Score calculated using VantageScore 3.0',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey, fontSize: 10),
+                style: AppTextStyles.cardSmallBodyStyle.copyWith(
+                  color: AppColors.lightPurpleText,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),
@@ -56,60 +107,61 @@ class CreditChart extends StatelessWidget {
     );
   }
 
-  Widget _buildChart(Color chartColor) {
-    return SizedBox(
-      height: 100,
-      child: LineChart(
-        LineChartData(
-          gridData: FlGridData(show: false),
-          titlesData: FlTitlesData(
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 40,
-                interval: 50,
-                getTitlesWidget: (value, meta) {
-                  return Text(value.toInt().toString(), style: const TextStyle(fontSize: 12, color: Colors.grey));
-                },
+  Widget _buildChart() {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return SizedBox(
+          height: 100,
+          child: LineChart(
+            LineChartData(
+              gridData: FlGridData(show: false),
+              titlesData: FlTitlesData(
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 40,
+                    interval: 50,
+                    getTitlesWidget: (value, meta) {
+                      return Text(value.toInt().toString(), style: const TextStyle(fontSize: 12, color: Colors.grey));
+                    },
+                  ),
+                ),
+                bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
               ),
-            ),
-            bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          ),
-          borderData: FlBorderData(show: false),
-          minX: 0,
-          maxX: 11,
-          minY: 600,
-          maxY: 700,
-          lineBarsData: [
-            LineChartBarData(
-              spots: [
-                const FlSpot(0, 610),
-                const FlSpot(1, 600),
-                const FlSpot(2, 625),
-                const FlSpot(3, 650),
-                const FlSpot(4, 635),
-                const FlSpot(5, 665),
-                const FlSpot(6, 650),
-                const FlSpot(7, 655),
-                const FlSpot(8, 650),
-                const FlSpot(9, 675),
-                const FlSpot(10, 700),
-                const FlSpot(11, 695),
+              borderData: FlBorderData(show: false),
+              minX: 0,
+              maxX: 11,
+              minY: 600,
+              maxY: 700,
+              lineBarsData: [
+                LineChartBarData(
+                  spots: _getAnimatedSpots(_animation.value),
+                  isCurved: false,
+                  color: AppColors.middleGreen,
+                  barWidth: 2,
+                  dotData: FlDotData(
+                    show: true,
+                    getDotPainter: (spot, percent, barData, index) {
+                      if (index < _getAnimatedSpots(_animation.value).length) {
+                        return FlDotCirclePainter(
+                          radius: 3,
+                          color: AppColors.white,
+                          strokeWidth: 2,
+                          strokeColor: AppColors.middleGreen,
+                        );
+                      }
+                      return FlDotCirclePainter(radius: 0);
+                    },
+                  ),
+                ),
               ],
-              isCurved: false,
-              color: chartColor,
-              barWidth: 2,
-              dotData: FlDotData(
-                show: true,
-                getDotPainter: (spot, percent, barData, index) =>
-                    FlDotCirclePainter(radius: 3, color: Colors.white, strokeWidth: 2, strokeColor: chartColor),
-              ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

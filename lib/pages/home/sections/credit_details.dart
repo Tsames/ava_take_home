@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/rating_thresholds.dart';
-import 'package:meet_ava_take_home/repository/score_provider.dart';
+import 'package:meet_ava_take_home/common/styles/app_text_styles.dart';
+import 'package:meet_ava_take_home/pages/home/home_page_styled_card.dart';
+import 'package:meet_ava_take_home/repository/state_provider.dart';
 
+import '../../../common/styles/app_colors.dart';
 import '../animated/animated_dial.dart';
 
 class CreditDetails extends ConsumerWidget {
@@ -12,53 +15,56 @@ class CreditDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cardHeadline = Theme.of(context).textTheme.headlineSmall;
-    final cardBodyLightText = Theme.of(context).textTheme.bodyMedium;
-    final cardBodyPinkText = Theme.of(context).textTheme.bodySmall;
-
     final creditScore = ref.watch(creditScoreProvider);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+    return Container(
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24, top: 8),
+      decoration: BoxDecoration(
+        color: AppColors.headBackground,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
+      ),
+      child: StyledCard(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Credit Score', style: cardHeadline),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.tertiary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '+2pts',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                  Row(
+                    children: [
+                      Text('Credit Score', style: AppTextStyles.cardHeadlineStyle),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: AppColors.middleGreen,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Text('+2pts', style: AppTextStyles.cardPointsStyle),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text('Updated Today | Next May 12', style: AppTextStyles.cardBodyDetailsStyle),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Experian',
+                    style: AppTextStyles.cardSmallBodyStyle.copyWith(
+                      color: AppColors.pinkText,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
-              Text('Updated Today | Next May 12', style: cardBodyLightText),
-              const SizedBox(height: 4),
-              Text('Experian', style: cardBodyPinkText),
-            ],
-          ),
+            ),
+            SizedBox(
+              width: 75,
+              height: 75,
+              child: AnimatedDial(value: creditScore, maxValue: 850, thresholds: ratingThresholds),
+            ),
+          ],
         ),
-        SizedBox(
-          width: 75,
-          height: 75,
-          child: AnimatedDial(value: creditScore, maxValue: 850, thresholds: ratingThresholds),
-        ),
-      ],
+      ),
     );
   }
 }
