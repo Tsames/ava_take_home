@@ -1,3 +1,7 @@
+import 'package:meet_ava_take_home/common/pay_frequency.dart';
+
+import 'employment_type.dart';
+
 class UserData {
   final EmploymentType employmentType;
   final String employer;
@@ -22,26 +26,38 @@ class UserData {
     required this.yearsWithEmployer,
     required this.monthsWithEmployer,
   });
+
+  UserData copyWith({
+    EmploymentType? employmentType,
+    String? employer,
+    String? jobTitle,
+    int? salary,
+    PayFrequency? payFrequency,
+    bool? isDirectDeposit,
+    String? employerAddress,
+    DateTime? nextPayDay,
+    int? yearsWithEmployer,
+    int? monthsWithEmployer,
+  }) {
+    return UserData(
+      employmentType: employmentType ?? this.employmentType,
+      employer: employer ?? this.employer,
+      jobTitle: jobTitle ?? this.jobTitle,
+      salary: salary ?? this.salary,
+      payFrequency: payFrequency ?? this.payFrequency,
+      isDirectDeposit: isDirectDeposit ?? this.isDirectDeposit,
+      employerAddress: employerAddress ?? this.employerAddress,
+      nextPayDay: nextPayDay ?? this.nextPayDay,
+      yearsWithEmployer: yearsWithEmployer ?? this.yearsWithEmployer,
+      monthsWithEmployer: monthsWithEmployer ?? this.monthsWithEmployer,
+    );
+  }
 }
 
-enum EmploymentType {
-  fullTime('Full Time'),
-  partTime('Part Time'),
-  contract('Independent Contractor'),
-  notApplicable('Not Applicable');
+abstract class EnumWrapper<T extends Enum> {
+  const EnumWrapper();
 
-  final String label;
+  String getLabel(T value);
 
-  const EmploymentType(this.label);
-}
-
-enum PayFrequency {
-  yearly('Yearly'),
-  monthly('Monthly'),
-  biWeekly('Bi-weekly'),
-  hourly('Hourly');
-
-  final String label;
-
-  const PayFrequency(this.label);
+  List<T> get values;
 }

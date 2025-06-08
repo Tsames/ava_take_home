@@ -69,4 +69,18 @@ abstract class AppTextStyles {
     color: AppColors.deepPurple,
     fontWeight: FontWeight.w400,
   );
+
+  static const settingsEditFieldName = TextStyle(
+    fontFamily: "AtHauss",
+    fontSize: 14,
+    color: AppColors.deepPurple,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const settingsEditFieldData = TextStyle(
+    fontFamily: "AtHauss",
+    fontSize: 16,
+    color: AppColors.deepPurple,
+    fontWeight: FontWeight.w400,
+  );
 }
