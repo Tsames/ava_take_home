@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/user_data.dart';
 
 import '../credit_account.dart';
+import '../employment_type.dart';
+import '../pay_frequency.dart';
 
 final creditScoreProvider = StateProvider<int>((ref) => 720);
 final totalBalanceProvider = StateProvider<int>((ref) => 8390);
