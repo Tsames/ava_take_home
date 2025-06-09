@@ -14,6 +14,11 @@ class SettingsDisplay extends ConsumerWidget {
 
   const SettingsDisplay({super.key, required this.onEnter});
 
+  void _exitSettings(BuildContext context, WidgetRef ref) {
+    ref.watch(feedbackVisibilityProvider.notifier).state = true;
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final format = StringFormater();
@@ -87,7 +92,7 @@ class SettingsDisplay extends ConsumerWidget {
           textColor: AppColors.white,
           backgroundColor: AppColors.headBackground,
           buttonText: "Confirm",
-          onPressedCallback: onEnter,
+          onPressedCallback: () => {_exitSettings(context, ref)},
         ),
       ],
     );

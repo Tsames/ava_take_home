@@ -7,6 +7,7 @@ import 'package:meet_ava_take_home/common/user_data.dart';
 
 import '../credit_account.dart';
 
+final feedbackVisibilityProvider = StateProvider<bool>((ref) => false);
 final creditScoreProvider = StateProvider<int>((ref) => 720);
 final totalBalanceProvider = StateProvider<int>((ref) => 8390);
 final creditBalanceProvider = StateProvider<int>((ref) => 75);
@@ -56,7 +57,6 @@ class UserDataNotifier extends StateNotifier<UserData?> {
       final storedData = await HiveStorageService.getUserData();
 
       if (storedData == null) {
-        // Save defaults if no data exists
         await HiveStorageService.saveUserData(_defaultUserData);
         state = _defaultUserData;
       } else {

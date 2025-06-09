@@ -34,11 +34,14 @@ class _SettingsEditState extends ConsumerState<SettingsEdit> {
   void initState() {
     super.initState();
     _formUserData = ref.read(userDataProvider) ?? UserData.empty();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _validateForm();
+    });
   }
 
   void _validateForm() {
     final validity = _formKey.currentState?.validate() ?? false;
-    print("Form is $validity");
     setState(() {
       _isFormValid = validity;
     });
