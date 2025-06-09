@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:meet_ava_take_home/pages/home/home_page.dart';
 
-void main() {
+import 'common/repository/hive_storage_service.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -12,6 +17,10 @@ void main() {
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
+
+  await Hive.initFlutter();
+  await HiveStorageService.init();
+
   runApp(const ProviderScope(child: AvaApp()));
 }
 

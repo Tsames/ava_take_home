@@ -1,166 +1,216 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meet_ava_take_home/common/repository/state_provider.dart';
-import 'package:meet_ava_take_home/pages/settings/edit/settings_date_input.dart';
-import 'package:meet_ava_take_home/pages/settings/edit/settings_dropdown_input.dart';
-import 'package:meet_ava_take_home/pages/settings/edit/settings_enum_dropdown_input.dart';
+import 'package:meet_ava_take_home/pages/settings/edit/form/fields/settings_date_input.dart';
+import 'package:meet_ava_take_home/pages/settings/edit/form/fields/settings_dropdown_input.dart';
+import 'package:meet_ava_take_home/pages/settings/edit/form/fields/settings_enum_dropdown_input.dart';
+import 'package:meet_ava_take_home/pages/settings/edit/form/fields/settings_radio_button.dart';
+import 'package:meet_ava_take_home/pages/settings/edit/form/fields/settings_text_input.dart';
 import 'package:meet_ava_take_home/pages/settings/edit/settings_input_field.dart';
-import 'package:meet_ava_take_home/pages/settings/edit/settings_multiline-input.dart';
-import 'package:meet_ava_take_home/pages/settings/edit/settings_radio_button.dart';
-import 'package:meet_ava_take_home/pages/settings/edit/settings_text_input.dart';
 import 'package:meet_ava_take_home/pages/settings/settings_button.dart';
 
 import '../../../common/employment_type.dart';
 import '../../../common/pay_frequency.dart';
 import '../../../common/styles/app_colors.dart';
 import '../../../common/styles/app_text_styles.dart';
+import '../../../common/user_data.dart';
 import '../../../common/util/string_formater.dart';
 
 class SettingsEdit extends ConsumerStatefulWidget {
-  const SettingsEdit({super.key});
+  const SettingsEdit({super.key, required this.onExit});
+
+  final VoidCallback onExit;
 
   @override
-  ConsumerState<SettingsEdit> createState() => _SettingsPageState();
+  ConsumerState<SettingsEdit> createState() => _SettingsEditState();
 }
 
-class _SettingsPageState extends ConsumerState<SettingsEdit> {
+class _SettingsEditState extends ConsumerState<SettingsEdit> {
+  final _formKey = GlobalKey<FormState>();
+  bool _isFormValid = false;
+  late UserData _formUserData;
+
+  @override
+  void initState() {
+    super.initState();
+    _formUserData = ref.read(userDataProvider) ?? UserData.empty();
+  }
+
+  void _validateForm() {
+    final validity = _formKey.currentState?.validate() ?? false;
+    print("Form is $validity");
+    setState(() {
+      _isFormValid = validity;
+    });
+  }
+
+  void _saveAndExit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState!.save();
+      ref.read(userDataProvider.notifier).updateUserData(_formUserData);
+      widget.onExit();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final format = StringFormater();
-    final userData = ref.watch(userDataProvider);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Edit employment information', style: AppTextStyles.settingsHeadlineStyle),
-        const SizedBox(height: 30),
-        SettingsInputField(
-          fieldName: "Employment type",
-          child: SettingsEnumDropdownInput<EmploymentType>(
-            initialValue: userData.employmentType,
-            enumWrapper: EmploymentTypeWrapper(),
-            onChanged: (EmploymentType? newValue) {
-              if (newValue != null) {
-                ref.read(userDataProvider.notifier).state = userData.copyWith(employmentType: newValue);
-              }
-            },
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Edit employment information', style: AppTextStyles.settingsHeadlineStyle),
+          const SizedBox(height: 30),
+          SettingsInputField(
+            fieldName: "Employment type",
+            child: SettingsEnumDropdownInput<EmploymentType>(
+              initialValue: _formUserData.employmentType,
+              enumWrapper: EmploymentTypeWrapper(),
+              onChanged: (EmploymentType? newValue) {
+                _formUserData.employmentType = newValue;
+                _validateForm();
+              },
+              validator: (v) => v == null ? 'Required' : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Employer",
-          child: SettingsTextInput(
-            value: userData.employer,
-            onChanged: (String newValue) {
-              ref.read(userDataProvider.notifier).state = userData.copyWith(employer: newValue);
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Employer",
+            child: SettingsTextInput(
+              initialValue: _formUserData.employer,
+              onChanged: (String newValue) {
+                _formUserData.employer = newValue;
+                _validateForm();
+              },
+              validator: (v) => v!.isEmpty ? 'Required' : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Job Title",
-          child: SettingsTextInput(
-            value: userData.jobTitle,
-            onChanged: (String newValue) {
-              ref.read(userDataProvider.notifier).state = userData.copyWith(jobTitle: newValue);
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Job Title",
+            child: SettingsTextInput(
+              initialValue: _formUserData.jobTitle,
+              onChanged: (String newValue) {
+                _formUserData.jobTitle = newValue;
+                _validateForm();
+              },
+              validator: (v) => v!.isEmpty ? 'Required' : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Gross annual income",
-          child: SettingsTextInput(
-            value: format.formatDollars(userData.salary),
-            onChanged: (String newValue) {
-              ref.read(userDataProvider.notifier).state = userData.copyWith(salary: 1);
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Gross annual income",
+            child: SettingsTextInput(
+              initialValue: _formUserData.salary != null ? format.formatDollars(_formUserData.salary!) : null,
+              onChanged: (String newValue) {
+                final parsed = int.tryParse(newValue.replaceAll(RegExp(r'[^0-9]'), ''));
+                if (parsed != null) _formUserData.salary = parsed;
+                _validateForm();
+              },
+              validator: (v) => v!.isEmpty ? 'Required' : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Pay frequency",
-          child: SettingsEnumDropdownInput<PayFrequency>(
-            initialValue: userData.payFrequency,
-            enumWrapper: PayFrequencyWrapper(),
-            onChanged: (PayFrequency? newValue) {
-              if (newValue != null) {
-                ref.read(userDataProvider.notifier).state = userData.copyWith(payFrequency: newValue);
-              }
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Pay frequency",
+            child: SettingsEnumDropdownInput<PayFrequency>(
+              initialValue: _formUserData.payFrequency,
+              enumWrapper: PayFrequencyWrapper(),
+              onChanged: (PayFrequency? newValue) {
+                _formUserData.payFrequency = newValue;
+                _validateForm();
+              },
+              validator: (v) => v == null ? 'Required' : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "My next payday is",
-          child: SettingsDateField(
-            onDateSelected: (DateTime newValue) {
-              ref.read(userDataProvider.notifier).state = userData.copyWith(nextPayDay: newValue);
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "My next payday is",
+            child: SettingsDateField(
+              initialDate: _formUserData.nextPayDay,
+              onChanged: (DateTime? newValue) {
+                _formUserData.nextPayDay = newValue;
+                _validateForm();
+              },
+              validator: (v) => v == null
+                  ? "Please select a date"
+                  : v.isBefore(DateTime.now())
+                  ? "Cannot enter a day in the past"
+                  : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Is your pay a direct deposit",
-          child: SettingsRadioButton(
-            initialValue: userData.isDirectDeposit,
-            onChanged: (bool newValue) {
-              ref.read(userDataProvider.notifier).state = userData.copyWith(isDirectDeposit: newValue);
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Is your pay a direct deposit",
+            child: SettingsRadioButton(
+              initialValue: _formUserData.isDirectDeposit,
+              onChanged: (bool newValue) {
+                _formUserData.isDirectDeposit = newValue;
+                _validateForm();
+              },
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Employer address",
-          child: SettingsMultilineInput(
-            initialValue: userData.employerAddress,
-            onChanged: (String newValue) {
-              ref.read(userDataProvider.notifier).state = userData.copyWith(employerAddress: newValue);
-            },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Employer address",
+            child: SettingsTextInput(
+              initialValue: _formUserData.employerAddress,
+              minLines: 3,
+              maxLines: 5,
+              onChanged: (String newValue) {
+                _formUserData.employerAddress = newValue;
+                _validateForm();
+              },
+              validator: (v) => v!.isEmpty ? "Required" : null,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SettingsInputField(
-          fieldName: "Time with employer",
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: SettingsDropdownInput(
-                  initialValue: userData.yearsWithEmployer,
-                  units: "year",
-                  maxValue: 10,
-                  onChanged: (int? newValue) {
-                    if (newValue != null) {
-                      ref.read(userDataProvider.notifier).state = userData.copyWith(yearsWithEmployer: newValue);
-                    }
-                  },
+          const SizedBox(height: 20),
+          SettingsInputField(
+            fieldName: "Time with employer",
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SettingsDropdownInput(
+                    initialValue: _formUserData.yearsWithEmployer,
+                    units: "year",
+                    maxValue: 10,
+                    onChanged: (int? newValue) {
+                      _formUserData.yearsWithEmployer = newValue;
+                      _validateForm();
+                    },
+                    validator: (v) => v == null ? "Required" : null,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 30),
-              Expanded(
-                child: SettingsDropdownInput(
-                  initialValue: userData.monthsWithEmployer,
-                  units: "month",
-                  maxValue: 11,
-                  onChanged: (int? newValue) {
-                    if (newValue != null) {
-                      ref.read(userDataProvider.notifier).state = userData.copyWith(monthsWithEmployer: newValue);
-                    }
-                  },
+                const SizedBox(width: 30),
+                Expanded(
+                  child: SettingsDropdownInput(
+                    initialValue: _formUserData.monthsWithEmployer,
+                    units: "month",
+                    maxValue: 11,
+                    onChanged: (int? newValue) {
+                      _formUserData.monthsWithEmployer = newValue;
+                      _validateForm();
+                    },
+                    validator: (v) => v == null ? "Required" : null,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 30),
-        SettingsButton(
-          textColor: AppColors.white,
-          backgroundColor: AppColors.headBackground,
-          buttonText: "Confirm",
-          onPressedCallback: () => {},
-        ),
-        const SizedBox(height: 50),
-      ],
+          const SizedBox(height: 30),
+          SettingsButton(
+            textColor: AppColors.white,
+            backgroundColor: _isFormValid ? AppColors.headBackground : AppColors.outline,
+            buttonText: "Confirm",
+            onPressedCallback: _saveAndExit,
+          ),
+
+          const SizedBox(height: 50),
+        ],
+      ),
     );
   }
 }

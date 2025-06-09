@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meet_ava_take_home/common/repository/state_provider.dart';
+import 'package:meet_ava_take_home/pages/settings/display/settings_display.dart';
 import 'package:meet_ava_take_home/pages/settings/edit/settings_edit.dart';
 
+import '../../common/repository/state_provider.dart';
 import '../../common/styles/app_colors.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
@@ -13,6 +14,20 @@ class SettingsPage extends ConsumerStatefulWidget {
 }
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
+  bool _isEditing = false;
+
+  void _setDisplayMode() {
+    setState(() {
+      _isEditing = false;
+    });
+  }
+
+  void _setEditingMode() {
+    setState(() {
+      _isEditing = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final userData = ref.watch(userDataProvider);
@@ -26,7 +41,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_back, color: AppColors.deepPurple),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => {_isEditing ? _setDisplayMode() : Navigator.of(context).pop()},
             ),
           ],
         ),
@@ -40,9 +55,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 40),
               child: SingleChildScrollView(
                 physics: ClampingScrollPhysics(),
-                child:
-                    // SettingsDisplay(),
-                    SettingsEdit(),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: _isEditing ? SettingsEdit(onExit: _setDisplayMode) : SettingsDisplay(onEnter: _setEditingMode),
+                ),
               ),
             ),
           ),

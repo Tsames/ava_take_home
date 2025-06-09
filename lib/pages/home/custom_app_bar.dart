@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_ava_take_home/pages/settings/display/settings_display.dart';
 import 'package:meet_ava_take_home/pages/settings/settings_page.dart';
 
 import '../../common/styles/app_colors.dart';
