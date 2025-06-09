@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meet_ava_take_home/pages/settings/display/settings_display.dart';
 import 'package:meet_ava_take_home/pages/settings/settings_page.dart';
 
 import '../../common/styles/app_colors.dart';
@@ -13,17 +12,21 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24, top: 8),
       decoration: BoxDecoration(color: AppColors.headBackground),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          IconButton(
-            icon: Icon(Icons.settings, color: AppColors.white),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsPage()));
-            },
+          Center(
+            child: Text('Home', style: AppTextStyles.cardHeadlineStyle.copyWith(color: AppColors.white)),
           ),
-          Text('Home', style: AppTextStyles.cardHeadlineStyle.copyWith(color: AppColors.white)),
-          const SizedBox(),
+          Positioned(
+            left: 0,
+            child: IconButton(
+              icon: Icon(Icons.settings, color: AppColors.white),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsPage()));
+              },
+            ),
+          ),
         ],
       ),
     );
