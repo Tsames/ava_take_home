@@ -6,7 +6,7 @@ class SettingsButton extends StatelessWidget {
   final Color backgroundColor;
   final Color? borderColor;
   final String buttonText;
-  final VoidCallback onPressedCallback;
+  final void Function() onPressedCallback;
 
   const SettingsButton({
     super.key,

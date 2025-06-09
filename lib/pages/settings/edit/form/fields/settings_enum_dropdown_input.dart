@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/styles/app_colors.dart';
-import '../../../common/styles/app_text_styles.dart';
-import '../../../common/user_data.dart';
+import '../../../../../common/styles/app_colors.dart';
+import '../../../../../common/styles/app_text_styles.dart';
+import '../../../../../common/user_data.dart';
 
 class SettingsEnumDropdownInput<T extends Enum> extends StatelessWidget {
-  final T initialValue;
+  final T? initialValue;
   final EnumWrapper<T> enumWrapper;
   final ValueChanged<T?> onChanged;
+  final FormFieldValidator<T> validator;
+  final bool autoValidate;
 
   const SettingsEnumDropdownInput({
     super.key,
     required this.initialValue,
     required this.enumWrapper,
     required this.onChanged,
+    required this.validator,
+    this.autoValidate = true,
   });
 
   @override
@@ -21,6 +25,8 @@ class SettingsEnumDropdownInput<T extends Enum> extends StatelessWidget {
     return DropdownButtonFormField<T>(
       value: initialValue,
       onChanged: onChanged,
+      validator: validator,
+      autovalidateMode: autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
       style: AppTextStyles.settingsStaticFieldData,
       items: enumWrapper.values.map((value) {
         return DropdownMenuItem<T>(value: value, child: Text(enumWrapper.getLabel(value)));

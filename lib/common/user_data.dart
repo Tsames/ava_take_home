@@ -3,16 +3,16 @@ import 'package:meet_ava_take_home/common/pay_frequency.dart';
 import 'employment_type.dart';
 
 class UserData {
-  final EmploymentType employmentType;
-  final String employer;
-  final String jobTitle;
-  final int salary;
-  final PayFrequency payFrequency;
-  final bool isDirectDeposit;
-  final String employerAddress;
-  final DateTime nextPayDay;
-  final int yearsWithEmployer;
-  final int monthsWithEmployer;
+  EmploymentType? employmentType;
+  String? employer;
+  String? jobTitle;
+  int? salary;
+  PayFrequency? payFrequency;
+  bool? isDirectDeposit;
+  String? employerAddress;
+  DateTime? nextPayDay;
+  int? yearsWithEmployer;
+  int? monthsWithEmployer;
 
   UserData({
     required this.employmentType,
@@ -50,6 +50,21 @@ class UserData {
       nextPayDay: nextPayDay ?? this.nextPayDay,
       yearsWithEmployer: yearsWithEmployer ?? this.yearsWithEmployer,
       monthsWithEmployer: monthsWithEmployer ?? this.monthsWithEmployer,
+    );
+  }
+
+  static UserData empty() {
+    return UserData(
+      employmentType: null,
+      employer: null,
+      jobTitle: null,
+      salary: null,
+      payFrequency: null,
+      isDirectDeposit: null,
+      employerAddress: null,
+      nextPayDay: null,
+      yearsWithEmployer: null,
+      monthsWithEmployer: null,
     );
   }
 }
